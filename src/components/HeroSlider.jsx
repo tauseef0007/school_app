@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function HeroSlider() {
   const slides = [
@@ -22,27 +22,14 @@ export default function HeroSlider() {
       title: "We Are Here",
       subtitle: "Building Future Leaders",
     },
-    {
-      image: "/images/4.jpg",
-      title: "We Are Here",
-      subtitle: "Building Future Leaders",
-    },
   ];
 
   const [index, setIndex] = useState(0);
 
-  // 👉 AUTO SLIDE
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [index]);
-
-  const nextSlide = () => {
+  // ✅ useCallback to fix dependency issue
+  const nextSlide = useCallback(() => {
     setIndex((prev) => (prev + 1) % slides.length);
-  };
+  }, [slides.length]);
 
   const prevSlide = () => {
     setIndex((prev) =>
@@ -50,20 +37,23 @@ export default function HeroSlider() {
     );
   };
 
+ 
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 3000);
+    return () => clearInterval(interval);
+  }, [nextSlide]);
+
   return (
     <div className="relative w-full h-[500px] overflow-hidden">
 
-      {/* Image */}
       <img
         src={slides[index].image}
+        alt={slides[index].title}   
         className="w-full h-full object-cover transition duration-700"
       />
 
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-
         <div className="text-center">
-
           <h1 className="text-white text-4xl md:text-6xl font-bold">
             {slides[index].title}
           </h1>
@@ -78,7 +68,7 @@ export default function HeroSlider() {
         </div>
       </div>
 
-      {/* 👉 LEFT ARROW */}
+      {/* LEFT */}
       <button
         onClick={prevSlide}
         className="absolute left-5 top-1/2 -translate-y-1/2 bg-white/70 p-3 rounded-full"
@@ -86,7 +76,7 @@ export default function HeroSlider() {
         ◀
       </button>
 
-      {/* 👉 RIGHT ARROW */}
+      {/* RIGHT */}
       <button
         onClick={nextSlide}
         className="absolute right-5 top-1/2 -translate-y-1/2 bg-white/70 p-3 rounded-full"
@@ -94,7 +84,7 @@ export default function HeroSlider() {
         ▶
       </button>
 
-      {/* 👉 DOTS */}
+      {/* DOTS */}
       <div className="absolute bottom-5 w-full flex justify-center gap-2">
         {slides.map((_, i) => (
           <div
@@ -106,9 +96,6 @@ export default function HeroSlider() {
           ></div>
         ))}
       </div>
-
-      {/* Curve */}
-      
     </div>
   );
 }
