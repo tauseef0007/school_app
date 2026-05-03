@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <div className="py-16 px-6 grid md:grid-cols-2 gap-10">
-      <img src="/images/school.jpg" className="rounded-xl shadow-lg" />
+      <img src="/images/school.jpg" alt="" className="rounded-xl shadow-lg" />
 
       <div>
         <h2 className="text-3xl font-bold text-blue-900 mb-4">

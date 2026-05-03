@@ -14,7 +14,7 @@ export default function Features() {
       <div className="grid md:grid-cols-3 gap-6 px-6">
         {data.map((item, i) => (
           <div key={i} className="bg-white text-black rounded-lg overflow-hidden shadow-lg">
-            <img src={item.img} />
+            <img src={item.img} alt="" />
             <h3 className="p-4 text-center font-semibold">{item.title}</h3>
           </div>
         ))}
