@@ -8,7 +8,7 @@ export default function Gallery() {
           <img
             key={img}
             src={`/images/${img}.jpg`}
-            alt={`Gallery image ${img}`}   // ✅ FIX
+            alt={`Gallery image ${img}`}   // ✅ FIX again
             className="rounded-lg hover:scale-110 transition duration-300"
           />
         ))}
